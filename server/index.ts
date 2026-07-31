@@ -1,8 +1,15 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-// create http blank server for socket.io
-const httpServer = createServer();
+// create http server for socket.io
+// also respond to plain HTTP requests (e.g. platform health checks) that aren't socket.io traffic,
+// since socket.io only handles its own path and otherwise leaves the request hanging with no response
+const httpServer = createServer((req, res) => {
+  if (!req.url?.startsWith("/socket.io")) {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("ok");
+  }
+});
 
 // create instance of socket.io and bind to httpserver
 const io = new Server(httpServer, {
