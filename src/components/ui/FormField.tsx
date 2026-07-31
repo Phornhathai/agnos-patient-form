@@ -19,6 +19,6 @@ export function FormField({ label, htmlFor, error, required, children }: FormFie
   );
 }
 
-export function cs(...classes: Array<string | false | undefined | null>): string {
+export function cx(...classes: Array<string | false | undefined | null>): string {
   return classes.filter(Boolean).join(" ");
 }
