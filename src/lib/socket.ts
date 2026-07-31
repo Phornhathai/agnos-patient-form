@@ -11,7 +11,7 @@ let socketInstance: Socket | null = null;
 export function getSocket(): Socket {
   if (!socketInstance) {
     socketInstance = io(SOCKET_URL, {
-      transport: ["websocket"],
+      transports: ["websocket"],
     });
   }
   return socketInstance;
