@@ -58,11 +58,13 @@ export function PatientForm() {
 
   if (submitted) {
     return (
-      <div className="mx-auto max-w-xl rounded-lg border border-emerald-200 bg-emerald-50 p-6 text-center">
-        <p className="text-lg font-semibold text-emerald-700">ส่งข้อมูลเรียบร้อยแล้ว</p>
-        <p className="mt-1 text-sm text-emerald-600">
-          เจ้าหน้าที่ได้รับข้อมูลของคุณเรียบร้อยแล้ว กรุณารอเรียกตามคิว
-        </p>
+      <div className="flex min-h-screen items-center justify-center p-6">
+        <div className="mx-auto max-w-xl rounded-lg border border-emerald-200 bg-emerald-50 p-6 text-center">
+          <p className="text-lg font-semibold text-emerald-700">ส่งข้อมูลเรียบร้อยแล้ว</p>
+          <p className="mt-1 text-sm text-emerald-600">
+            เจ้าหน้าที่ได้รับข้อมูลของคุณเรียบร้อยแล้ว กรุณารอเรียกตามคิว
+          </p>
+        </div>
       </div>
     );
   }
@@ -170,7 +172,7 @@ export function PatientForm() {
           />
         </FormField>
 
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 space-y-6">
           <FormField label="ที่อยู่" htmlFor="address" error={errors.address?.message} required>
             <input
               className={cx(baseInputClass, errors.address && "border-red-400")}

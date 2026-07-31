@@ -12,7 +12,7 @@ export const patientFormSchema = z.object({
   lastName: z.string().min(1, "กรุณากรอกนามสกุล"),
   dateOfBirth: z.string().min(1, "กรุณาเลือกวันเกิด"),
   gender: z.string().min(1, "กรุณาเลือกเพศ"),
-  phone: z.string().min(PHONE_REGEX, "เบอร์โทรต้องเป็นตัวเลข 9-10 หลัก"),
+  phone: z.string().regex(PHONE_REGEX, "เบอร์โทรต้องเป็นตัวเลข 9-10 หลัก"),
   email: z.string().email("รูปแบบอีเมลไม่ถูกต้อง"),
   address: z.string().min(1, "กรุณากรอกที่อยู่"),
   preferredLanguage: z.string().min(1, "กรุณาเลือกภาษาที่สะดวก"),
