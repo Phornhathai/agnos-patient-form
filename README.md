@@ -7,7 +7,9 @@
 
 ## Live Demo
 
-- Frontend: https://agnos-patient-form-psi.vercel.app
+- หน้าแรก (เลือกเข้า Patient Form หรือ Staff View): https://agnos-patient-form-psi.vercel.app
+- Patient Form: https://agnos-patient-form-psi.vercel.app/patient
+- Staff View: https://agnos-patient-form-psi.vercel.app/staff
 - Socket.io server: https://agnos-socket-server-q1bt.onrender.com
 
 > Socket server ใช้ Render free tier ซึ่งจะ sleep เมื่อไม่มีการใช้งานเกิน ~15 นาที การเชื่อมต่อครั้งแรกหลังจากที่ server sleep อาจใช้เวลา 30-50 วินาทีในการ wake ขึ้นมา
