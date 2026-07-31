@@ -162,7 +162,6 @@ export function PatientForm() {
           label="ศาสนา (ถ้ามี)"
           htmlFor="religion"
           error={errors.religion?.message}
-          required
         >
           <input
             type="religion"
@@ -184,7 +183,6 @@ export function PatientForm() {
             label="ชื่อผู้ติดต่อฉุกเฉิน (ถ้ามี)"
             htmlFor="emergencyContactName"
             error={errors.emergencyContactName?.message}
-            required
           >
             <input
               id="emergencyContactName"
@@ -193,10 +191,9 @@ export function PatientForm() {
             />
           </FormField>
           <FormField
-            label="ความสัมพันธ์"
+            label="ความสัมพันธ์ (ถ้ามี)"
             htmlFor="emergencyContactRelationship"
             error={errors.emergencyContactRelationship?.message}
-            required
           >
             <input
               id="emergencyContactRelationship"

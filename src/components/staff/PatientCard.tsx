@@ -7,7 +7,7 @@ interface PatientCardProps {
 
 function InfoRow({ label, value }: { label: string; value?: string }) {
   return (
-    <div className="flex justify-between gap-2 border-b border-slate-100 py-1 5 text-sm last:border-0">
+    <div className="flex justify-between gap-2 border-b border-slate-100 py-1.5 text-sm last:border-0">
       <span className="text-slate-500">{label}</span>
       <span className="font-medium text-slate-800">{value || "-"}</span>
     </div>

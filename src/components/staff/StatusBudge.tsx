@@ -15,9 +15,9 @@ export function StatusBadge({ status }: StatusBadgeProps) {
   const config = STATUS_CONFIG[status];
   return (
     <span
-      className={`inline-flex item-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${config.className}`}
+      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${config.className}`}
     >
-      <span className="h-1.5 w.1.5 rounded-full bg-current" />
+      <span className="h-1.5 w-1.5 rounded-full bg-current" />
       {config.label}
     </span>
   );
