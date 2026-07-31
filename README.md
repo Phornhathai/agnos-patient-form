@@ -35,6 +35,26 @@ server/
   index.ts        # Socket.io server แยกต่างหาก (broadcast ข้อมูลผู้ป่วยที่อัปเดต)
 ```
 
+## Design (การออกแบบ UI/UX ในแต่ละขนาดหน้าจอ)
+
+- **Mobile-first**: จัดเลย์เอาต์แบบ 1 คอลัมน์เป็นค่าเริ่มต้นก่อน แล้วค่อยขยายเป็นหลายคอลัมน์ที่จอใหญ่ขึ้น ด้วย Tailwind breakpoint `sm:`/`md:` เช่น ฟิลด์ในฟอร์มผู้ป่วยเป็น `grid-cols-1` บนมือถือ และเปลี่ยนเป็น `md:grid-cols-2` บนจอ tablet ขึ้นไป
+- **ปุ่ม**: ปุ่มเลือกหน้า (Patient Form / Staff View) ที่หน้าแรกเรียงเป็นแนวตั้ง (`flex-col`) บนมือถือ เพื่อให้กดง่ายด้วยนิ้วโป้ง แล้วเปลี่ยนเป็นแนวนอน (`sm:flex-row`) บนจอกว้าง
+- **ความกว้างของ container**: ใช้ `max-w-xl` / `max-w-2xl` จำกัดความกว้างของฟอร์มและการ์ดผู้ป่วยบนจอใหญ่ ไม่ให้ข้อความยืดยาวเกินไปจนอ่านยาก พร้อม `mx-auto` จัดกึ่งกลาง
+- **Feedback ทันที**: error message จาก Zod validation แสดงใต้ฟิลด์ทันทีที่ submit ไม่ถูกต้อง และ input ที่ error จะมีขอบสีแดง (`border-red-400`) ให้สังเกตง่าย
+- **สถานะแบบ real-time**: ใช้ status badge สีต่างกัน 4 สถานะ (เทา/เหลือง/ส้ม/เขียว) ให้เจ้าหน้าที่กวาดตาดูสถานะผู้ป่วยได้เร็วโดยไม่ต้องอ่านข้อความ
+
+## Component Architecture
+
+| Component | หน้าที่ |
+|---|---|
+| `PatientForm` | ฟอร์มหลักฝั่งผู้ป่วย ใช้ React Hook Form + Zod resolver คุม validation, `watch()` ทุกฟิลด์แล้วส่งขึ้น socket แบบ real-time ผ่าน `usePatientSocket`, แสดงหน้าจอยืนยันเมื่อ submit สำเร็จ |
+| `StaffDashboard` | หน้าหลักฝั่งเจ้าหน้าที่ ดึงข้อมูลผู้ป่วยปัจจุบันผ่าน `usePatientSocket` (mode `read`) แล้วส่งต่อให้ `PatientCard` แสดงผล |
+| `PatientCard` | แสดงข้อมูลผู้ป่วยทั้งหมดเป็นรายการ พร้อม `StatusBadge` บอกสถานะปัจจุบัน |
+| `StatusBadge` | ปุ่ม badge แสดงสถานะ 1 ใน 4 (idle / filling / inactive / submitted) พร้อมสีและข้อความที่ map ไว้ล่วงหน้า |
+| `FormField` | wrapper ใช้ซ้ำสำหรับทุกฟิลด์ในฟอร์ม จัดการ label, เครื่องหมาย required, และข้อความ error ให้หน้าตาฟอร์มสม่ำเสมอ |
+| `usePatientSocket` (hook) | ศูนย์กลาง logic การเชื่อมต่อ socket ทั้งฝั่งเขียน (`write` สำหรับผู้ป่วย) และฝั่งอ่าน (`read` สำหรับเจ้าหน้าที่) รวมถึงคำนวณสถานะ `inactive` เมื่อผู้ป่วยหยุดพิมพ์เกิน 5 วินาที |
+| `lib/socket.ts` | สร้างและเก็บ instance ของ `socket.io-client` แบบ singleton ตัวเดียวต่อ session ป้องกันการเปิด connection ซ้ำซ้อนเวลา component re-render |
+
 ## วิธีรันโปรเจกต์ในเครื่อง
 
 โปรเจกต์นี้ต้องรัน **2 process พร้อมกัน** คือ Next.js app และ Socket.io server
